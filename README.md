@@ -7,7 +7,7 @@ Sistem manajemen internal berbasis **Single Page Application (SPA)** yang dibang
 - **Frontend:** React JS + Vite (JavaScript)
 - **Styling:** Tailwind CSS v4
 - **Routing:** React Router v7
-- **Database & Auth:** Supabase (PostgreSQL)
+- **Database & Backend:** Backend Node.js + MySQL
 
 ## 📦 MVP Core Features
 

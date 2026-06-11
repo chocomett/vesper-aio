@@ -5,6 +5,7 @@ import { LogOut } from 'lucide-react'
 import Login from './pages/Login'
 import MainMenu from './pages/MainMenu'
 import DummyPage from './components/DummyPage'
+import FullcamPage from './pages/FullcamPage'
 
 function App() {
   const [user, setUser] = useState(null)
@@ -57,7 +58,7 @@ function App() {
             <Route path="/peminjaman" element={<DummyPage title="Sistem Peminjaman" />} />
             <Route path="/penjualan" element={<DummyPage title="Penjualan Teks Misa" />} />
             <Route path="/keuangan" element={<DummyPage title="Pencatatan Keuangan" />} />
-            <Route path="/fullcam" element={<DummyPage title="Modul Kamera Fullcam" />} />
+            <Route path="/fullcam" element={<FullcamPage />} />
             <Route path="/template-misa" element={<DummyPage title="Template Teks Misa" />} />
             <Route path="/wifi" element={<DummyPage title="Generator Voucher WiFi" />} />
 

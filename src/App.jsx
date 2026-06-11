@@ -6,6 +6,7 @@ import Login from './pages/Login'
 import MainMenu from './pages/MainMenu'
 import DummyPage from './components/DummyPage'
 import FullcamPage from './pages/FullcamPage'
+import AcakPetugasPage from './pages/AcakPetugas'
 
 function App() {
   const [user, setUser] = useState(null)
@@ -16,12 +17,12 @@ function App() {
 
   return (
     <Router>
-      <div className="min-h-screen bg-[#dbdbdb] flex flex-col items-center p-6 md:p-12 font-sans selection:bg-[#0a0f1d] selection:text-white">
+      <div className="h-screen overflow-hidden bg-[#dbdbdb] flex flex-col items-center p-4 md:p-6 font-sans selection:bg-[#0a0f1d] selection:text-white">
 
         {/* Header Global */}
-        <div className="w-full max-w-5xl flex justify-between items-center mb-10 pt-4">
-          <Link to="/" className="hover:opacity-80 transition-opacity">
-            <h1 className="text-3xl md:text-4xl font-black tracking-[0.2em] text-[#0a0f1d]">
+        <div className="w-full max-w-7xl flex justify-between items-center mb-4">
+          <Link to="/" className="hover:opacity-80 transition-opacity pl-2">
+            <h1 className="text-2xl md:text-3xl font-black tracking-[0.2em] text-[#0a0f1d]">
               VESPER RPD
             </h1>
           </Link>
@@ -49,13 +50,15 @@ function App() {
             <Login onLogin={setUser} />
           </div>
         ) : (
-          <Routes>
+          <div className="flex-1 w-full max-w-7xl flex flex-col min-h-0">
+            <Routes>
             <Route path="/" element={<MainMenu user={user} />} />
 
             <Route path="/dashboard" element={<DummyPage title="Dashboard Analytics" />} />
             <Route path="/absen" element={<DummyPage title="Easy Absen" />} />
             <Route path="/inventaris" element={<DummyPage title="Manajemen Inventaris" />} />
             <Route path="/peminjaman" element={<DummyPage title="Sistem Peminjaman" />} />
+            <Route path="/acak-petugas" element={<AcakPetugasPage />} />
             <Route path="/penjualan" element={<DummyPage title="Penjualan Teks Misa" />} />
             <Route path="/keuangan" element={<DummyPage title="Pencatatan Keuangan" />} />
             <Route path="/fullcam" element={<FullcamPage />} />
@@ -64,6 +67,7 @@ function App() {
 
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
+          </div>
         )}
 
       </div>

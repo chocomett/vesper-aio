@@ -7,7 +7,8 @@ import {
   Wallet, 
   Camera, 
   FileText, 
-  Wifi
+  Wifi,
+  Dices
 } from 'lucide-react'
 
 export const STATIC_USERS = {
@@ -21,6 +22,7 @@ export const ALL_FEATURES = [
   { id: 'absen', title: "Easy Absen", path: "/absen", icon: UserCheck, desc: "Absensi kehadiran anggota", roles: ['admin', 'komsos', 'maintenance'] },
   { id: 'inventaris', title: "Inventaris", path: "/inventaris", icon: Package, desc: "Manajemen stok barang", roles: ['admin', 'maintenance'] },
   { id: 'peminjaman', title: "Peminjaman", path: "/peminjaman", icon: ClipboardList, desc: "Log pinjam & kembali", roles: ['admin', 'komsos', 'maintenance'] },
+  { id: 'acak-petugas', title: "Acak Petugas", path: "/acak-petugas", icon: Dices, desc: "Generator jadwal tugas", roles: ['admin', 'komsos'] },
   { id: 'penjualan', title: "Penjualan", path: "/penjualan", icon: Receipt, desc: "Kasir teks misa harian", roles: ['admin', 'komsos', 'maintenance'] },
   { id: 'keuangan', title: "Keuangan", path: "/keuangan", icon: Wallet, desc: "Pencatatan pengeluaran tim", roles: ['admin'] },
   { id: 'fullcam', title: "Fullcam", path: "/fullcam", icon: Camera, desc: "Kamera web gesture UI", roles: ['admin', 'komsos', 'maintenance'] },

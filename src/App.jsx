@@ -1,23 +1,70 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Link, Navigate } from 'react-router-dom'
+import { useState } from 'react'
+import { LogOut } from 'lucide-react'
+
+import Login from './pages/Login'
+import MainMenu from './pages/MainMenu'
+import DummyPage from './components/DummyPage'
 
 function App() {
+  const [user, setUser] = useState(null)
+
+  const handleLogout = () => {
+    setUser(null)
+  }
+
   return (
     <Router>
-      <div className="min-h-screen bg-[#dbdbdb] flex flex-col items-center justify-center p-4">
-        <h1 className="text-4xl md:text-5xl font-black tracking-widest text-[#0a0f1d] mb-8">
-          VESPER RPD
-        </h1>
-        
-        <Routes>
-          <Route path="/" element={
-            <div className="bg-white/50 backdrop-blur-sm p-8 rounded-2xl shadow-xl w-full max-w-md text-center border border-white/20">
-              <h2 className="text-2xl font-bold mb-3 text-[#0a0f1d]">Welcome to Vesper AIO</h2>
-              <p className="text-[#0a0f1d]/70 text-sm leading-relaxed">
-                Project has been successfully migrated to pure React with Vite + Tailwind CSS v4.
-              </p>
+      <div className="min-h-screen bg-[#dbdbdb] flex flex-col items-center p-6 md:p-12 font-sans selection:bg-[#0a0f1d] selection:text-white">
+
+        {/* Header Global */}
+        <div className="w-full max-w-5xl flex justify-between items-center mb-10 pt-4">
+          <Link to="/" className="hover:opacity-80 transition-opacity">
+            <h1 className="text-3xl md:text-4xl font-black tracking-[0.2em] text-[#0a0f1d]">
+              VESPER RPD
+            </h1>
+          </Link>
+
+          {user && (
+            <div className="flex items-center gap-4">
+              <div className="hidden md:block text-right">
+                <p className="text-sm font-bold text-[#0a0f1d]">{user.name}</p>
+                <p className="text-xs text-[#0a0f1d]/60 uppercase tracking-wider">{user.role}</p>
+              </div>
+              <button
+                onClick={handleLogout}
+                className="p-3 bg-white/40 hover:bg-red-500/10 text-[#0a0f1d] hover:text-red-600 rounded-xl transition-colors border border-transparent hover:border-red-500/20 group"
+                title="Logout"
+              >
+                <LogOut className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
+              </button>
             </div>
-          } />
-        </Routes>
+          )}
+        </div>
+
+        {/* Konten Utama */}
+        {!user ? (
+          <div className="flex-1 w-full flex items-center justify-center -mt-20">
+            <Login onLogin={setUser} />
+          </div>
+        ) : (
+          <Routes>
+            <Route path="/" element={<MainMenu user={user} />} />
+
+            <Route path="/dashboard" element={<DummyPage title="Dashboard Analytics" />} />
+            <Route path="/absen" element={<DummyPage title="Easy Absen" />} />
+            <Route path="/inventaris" element={<DummyPage title="Manajemen Inventaris" />} />
+            <Route path="/peminjaman" element={<DummyPage title="Sistem Peminjaman" />} />
+            <Route path="/penjualan" element={<DummyPage title="Penjualan Teks Misa" />} />
+            <Route path="/keuangan" element={<DummyPage title="Pencatatan Keuangan" />} />
+            <Route path="/fullcam" element={<DummyPage title="Modul Kamera Fullcam" />} />
+            <Route path="/template-misa" element={<DummyPage title="Template Teks Misa" />} />
+            <Route path="/wifi" element={<DummyPage title="Generator Voucher WiFi" />} />
+
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        )}
+
       </div>
     </Router>
   )

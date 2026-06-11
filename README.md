@@ -1,73 +1,31 @@
-# React + TypeScript + Vite
+# Vesper AIO
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Sistem manajemen internal berbasis **Single Page Application (SPA)** yang dibangun untuk mendigitalkan, menyatukan, dan mempermudah operasional tim Komsos. Proyek ini bertujuan untuk menghilangkan ketergantungan pada alat pihak ketiga, memberikan transparansi kinerja, dan memastikan konsistensi data.
 
-Currently, two official plugins are available:
+## 🚀 Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Frontend:** React JS + Vite (JavaScript)
+- **Styling:** Tailwind CSS v4
+- **Routing:** React Router v7
+- **Database & Auth:** Supabase (PostgreSQL)
 
-## React Compiler
+## 📦 MVP Core Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Sistem ini memiliki 9 fitur utama dalam fase Minimum Viable Product (MVP):
 
-## Expanding the ESLint configuration
+1. **Manajemen Inventaris (CRUD):** Pencatatan dan pengelolaan stok/kondisi barang.
+2. **Sistem Peminjaman Barang:** Pencatatan dan status real-time barang yang dipinjam.
+3. **Easy Absen:** Modul absensi satu klik yang ramah *mobile* (Responsive Web).
+4. **Penjualan Teks Misa:** Kasir sederhana untuk merekap penjualan teks misa mingguan.
+5. **Pencatatan Keuangan (Pengeluaran):** Form input pengeluaran cepat beserta upload nota.
+6. **Generator Voucher WiFi:** Integrasi API (seperti Mikrotik) untuk cetak voucher WiFi sekali klik.
+7. **Fullcam (Kamera Gesture-Based):** Kamera web full-screen tanpa tombol (usapan layar untuk navigasi).
+8. **Template Teks Misa:** Form-to-template bergaya CMS untuk mengisi konten bacaan dan petugas ke layout cetak.
+9. **Dashboard Analytics:** Grafik rekapitulasi kehadiran anggota, peminjaman, dan keuangan.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 👥 User Roles
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- **Team Komsos:** Akses Absen, Peminjaman, Template Teks Misa, Fullcam.
+- **Team Maintenance:** Akses penuh ke Inventaris & Voucher WiFi.
+- **Team Vesper (Admin):** Akses penuh fitur & Dashboard Analitik.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```

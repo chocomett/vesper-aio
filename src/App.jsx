@@ -6,7 +6,7 @@ import Login from './pages/Login'
 import MainMenu from './pages/MainMenu'
 import DummyPage from './components/DummyPage'
 import FullcamPage from './pages/FullcamPage'
-import AcakPetugasPage from './pages/AcakPetugas'
+import AcakPetugasPage from './pages/MassRandomizer'
 import { ALL_FEATURES } from './constants/data'
 
 const pageMap = {

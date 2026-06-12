@@ -1,10 +1,11 @@
 import { useState, useRef } from 'react';
+import { useLocalStorage } from 'react-use';
 import { toPng } from 'html-to-image';
 import { dapatkanJadwalMisaBulanIni } from '../utils/liturgyCalendar';
 
 export function useMassRandomizer() {
   const [tanggalBulanIni, setTanggalBulanIni] = useState(new Date());
-  const [teksNamaPetugas, setTeksNamaPetugas] = useState("");
+  const [teksNamaPetugas, setTeksNamaPetugas] = useLocalStorage('vesper_officers_list', "");
   
   const [jadwalBulanan, setJadwalBulanan] = useState(null);
   const [sedangMengacak, setSedangMengacak] = useState(false);

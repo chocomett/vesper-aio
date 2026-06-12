@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Link, Navigate } from 'react-router-dom'
 import { useState } from 'react'
+import { useLocalStorage } from 'react-use'
 import { LogOut } from 'lucide-react'
 
 import Login from './pages/Login'
@@ -23,7 +24,7 @@ const pageMap = {
 };
 
 function App() {
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useLocalStorage('vesper_user_session', null)
 
   const handleLogout = () => {
     setUser(null)

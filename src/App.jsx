@@ -7,6 +7,20 @@ import MainMenu from './pages/MainMenu'
 import DummyPage from './components/DummyPage'
 import FullcamPage from './pages/FullcamPage'
 import AcakPetugasPage from './pages/AcakPetugas'
+import { ALL_FEATURES } from './constants/data'
+
+const pageMap = {
+  '/dashboard': <DummyPage title="Dashboard Analytics" />,
+  '/absen': <DummyPage title="Easy Absen" />,
+  '/inventaris': <DummyPage title="Manajemen Inventaris" />,
+  '/peminjaman': <DummyPage title="Sistem Peminjaman" />,
+  '/acak-petugas': <AcakPetugasPage />,
+  '/penjualan': <DummyPage title="Penjualan Teks Misa" />,
+  '/keuangan': <DummyPage title="Pencatatan Keuangan" />,
+  '/fullcam': <FullcamPage />,
+  '/template-misa': <DummyPage title="Template Teks Misa" />,
+  '/wifi': <DummyPage title="Generator Voucher WiFi" />
+};
 
 function App() {
   const [user, setUser] = useState(null)
@@ -52,21 +66,23 @@ function App() {
         ) : (
           <div className="flex-1 w-full max-w-7xl flex flex-col min-h-0">
             <Routes>
-            <Route path="/" element={<MainMenu user={user} />} />
+              <Route path="/" element={<MainMenu user={user} />} />
+              
+              {/* Dynamic Route Protection based on data.js */}
+              {ALL_FEATURES.map((feature) => (
+                <Route 
+                  key={feature.path} 
+                  path={feature.path} 
+                  element={
+                    feature.roles.includes(user.role) 
+                      ? pageMap[feature.path] 
+                      : <Navigate to="/" replace />
+                  } 
+                />
+              ))}
 
-            <Route path="/dashboard" element={<DummyPage title="Dashboard Analytics" />} />
-            <Route path="/absen" element={<DummyPage title="Easy Absen" />} />
-            <Route path="/inventaris" element={<DummyPage title="Manajemen Inventaris" />} />
-            <Route path="/peminjaman" element={<DummyPage title="Sistem Peminjaman" />} />
-            <Route path="/acak-petugas" element={<AcakPetugasPage />} />
-            <Route path="/penjualan" element={<DummyPage title="Penjualan Teks Misa" />} />
-            <Route path="/keuangan" element={<DummyPage title="Pencatatan Keuangan" />} />
-            <Route path="/fullcam" element={<FullcamPage />} />
-            <Route path="/template-misa" element={<DummyPage title="Template Teks Misa" />} />
-            <Route path="/wifi" element={<DummyPage title="Generator Voucher WiFi" />} />
-
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
           </div>
         )}
 

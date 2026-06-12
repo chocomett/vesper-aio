@@ -38,7 +38,7 @@ export default function MassRandomizerPage() {
       </div>
 
       <div className="flex-1 overflow-auto p-4 md:p-6">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-6 h-full">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-6 lg:h-full">
           
           <SidebarInput 
             namaBulan={namaBulan}

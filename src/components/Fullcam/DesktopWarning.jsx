@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 export default function DesktopWarning() {
   return (
-    <div className="flex flex-col items-center justify-center text-center p-8 md:p-12 bg-white/50 backdrop-blur-xl rounded-[2rem] shadow-xl border border-white/40 w-full max-w-lg mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500">
+    <div className="flex flex-col items-center justify-center text-center p-8 md:p-12 bg-white/50 backdrop-blur-xl rounded-[2rem] shadow-xl border border-white/40 w-full h-full animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div className="w-24 h-24 bg-red-500/10 rounded-full flex items-center justify-center mb-8 border border-red-500/20">
         <Smartphone className="w-12 h-12 text-red-600 animate-pulse" strokeWidth={1.5} />
       </div>

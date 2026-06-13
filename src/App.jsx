@@ -8,13 +8,14 @@ import MainMenu from './pages/MainMenu'
 import DummyPage from './components/DummyPage'
 import FullcamPage from './pages/FullcamPage'
 import AcakPetugasPage from './pages/MassRandomizer'
+import InventoryPage from './pages/InventoryPage'
 import { ALL_FEATURES } from './constants/data'
 
 const pageMap = {
   '/dashboard': <DummyPage title="Dashboard Analytics" />,
   '/absen': <DummyPage title="Easy Absen" />,
-  '/inventaris': <DummyPage title="Manajemen Inventaris" />,
-  '/peminjaman': <DummyPage title="Sistem Peminjaman" />,
+  '/inventaris': <InventoryPage />,
+  '/peminjaman': <InventoryPage />,
   '/acak-petugas': <AcakPetugasPage />,
   '/penjualan': <DummyPage title="Penjualan Teks Misa" />,
   '/keuangan': <DummyPage title="Pencatatan Keuangan" />,

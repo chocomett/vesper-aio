@@ -4,19 +4,24 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "node server.js",
+    "start": "NODE_ENV=production node server.js",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.0",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
     "html-to-image": "^1.11.13",
     "lucide-react": "^1.17.0",
+    "mysql2": "^3.22.5",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
     "react-router-dom": "^7.17.0",
-    "react-use": "^17.6.1"
+    "react-use": "^17.6.1",
+    "vite-express": "^0.22.1"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

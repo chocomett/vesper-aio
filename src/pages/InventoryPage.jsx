@@ -9,12 +9,13 @@ import InventoryModal from '../components/Inventory/InventoryModal';
 const CATEGORIES = ['Semua', 'Kamera', 'Lensa', 'Audio', 'Kabel', 'Lighting', 'Komputer', 'Aksesoris', 'Lainnya'];
 
 export default function InventoryPage() {
-  const { inventoryData, isLoading, addItem } = useInventory();
+  const { inventoryData, isLoading, addItem, updateItem, deleteItem } = useInventory();
   
   // UI State
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState('Semua');
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [itemToEdit, setItemToEdit] = useState(null);
 
   // Filter Logic
   const filteredData = inventoryData.filter(item => {
@@ -23,6 +24,30 @@ export default function InventoryPage() {
     const matchFilter = filter === 'Semua' || item.kategori === filter;
     return matchSearch && matchFilter;
   });
+
+  const handleAddClick = () => {
+    setItemToEdit(null);
+    setIsModalOpen(true);
+  };
+
+  const handleEditClick = (item) => {
+    setItemToEdit(item);
+    setIsModalOpen(true);
+  };
+
+  const handleDeleteClick = async (id) => {
+    if (window.confirm("Yakin ingin menghapus barang ini secara permanen?")) {
+      await deleteItem(id);
+    }
+  };
+
+  const handleSaveModal = async (formData) => {
+    if (itemToEdit) {
+      return await updateItem(itemToEdit.id, formData);
+    } else {
+      return await addItem(formData);
+    }
+  };
 
   return (
     <div className="h-full w-full bg-slate-50 text-slate-900 overflow-hidden flex flex-col rounded-3xl shadow-lg border border-slate-200 relative">
@@ -41,7 +66,7 @@ export default function InventoryPage() {
         
         <div className="flex items-center gap-2">
           <button 
-            onClick={() => setIsModalOpen(true)}
+            onClick={handleAddClick}
             className="flex-1 sm:flex-none px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold rounded-xl flex items-center justify-center gap-2 transition-all shadow-sm shadow-blue-200"
           >
             <Plus className="w-4 h-4" /> Tambah Barang
@@ -62,6 +87,8 @@ export default function InventoryPage() {
         <InventoryList 
           data={filteredData} 
           isLoading={isLoading} 
+          onEdit={handleEditClick}
+          onDelete={handleDeleteClick}
         />
       </div>
 
@@ -69,7 +96,8 @@ export default function InventoryPage() {
       <InventoryModal 
         isOpen={isModalOpen} 
         onClose={() => setIsModalOpen(false)} 
-        onAdd={addItem} 
+        onSave={handleSaveModal}
+        initialData={itemToEdit}
       />
     </div>
   );

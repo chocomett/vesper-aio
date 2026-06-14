@@ -18,7 +18,18 @@ export const inventoryService = {
     });
   },
 
-  // Nanti kalau ada fitur Edit/Hapus, tinggal tambah di sini:
-  // update: (id, itemData) => apiClient(`/inventaris/${id}`, { method: 'PUT', body: JSON.stringify(itemData) }),
-  // delete: (id) => apiClient(`/inventaris/${id}`, { method: 'DELETE' }),
+  // Mengupdate barang
+  update: (id, itemData) => {
+    return apiClient(`/inventaris/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(itemData)
+    });
+  },
+
+  // Menghapus barang
+  delete: (id) => {
+    return apiClient(`/inventaris/${id}`, {
+      method: 'DELETE'
+    });
+  }
 };

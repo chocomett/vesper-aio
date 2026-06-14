@@ -47,7 +47,41 @@ app.post('/api/inventaris', async (req, res) => {
     res.status(201).json({ id: result.insertId, message: "Barang berhasil ditambahkan" });
   } catch (error) {
     console.error("Error adding inventaris:", error);
-    res.status(500).json({ error: "Gagal menyimpan barang ke database" });
+    res.status(500).json({ error: error.message || "Gagal menyimpan barang ke database" });
+  }
+});
+
+// Endpoint untuk Update Barang (Edit)
+app.put('/api/inventaris/:id', async (req, res) => {
+  const { id } = req.params;
+  const { kode_barang, nama_barang, kategori, kondisi, jumlah_total, lokasi_simpan, catatan } = req.body;
+  try {
+    const query = `
+      UPDATE inventaris 
+      SET kode_barang=?, nama_barang=?, kategori=?, kondisi=?, jumlah_total=?, lokasi_simpan=?, catatan=?
+      WHERE id=?
+    `;
+    const [result] = await dbPool.query(query, [
+      kode_barang, nama_barang, kategori, kondisi, jumlah_total, lokasi_simpan, catatan, id
+    ]);
+    if (result.affectedRows === 0) return res.status(404).json({ error: "Barang tidak ditemukan" });
+    res.json({ message: "Barang berhasil diupdate" });
+  } catch (error) {
+    console.error("Error updating inventaris:", error);
+    res.status(500).json({ error: error.message || "Gagal mengupdate barang" });
+  }
+});
+
+// Endpoint untuk Delete Barang
+app.delete('/api/inventaris/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const [result] = await dbPool.query('DELETE FROM inventaris WHERE id=?', [id]);
+    if (result.affectedRows === 0) return res.status(404).json({ error: "Barang tidak ditemukan" });
+    res.json({ message: "Barang berhasil dihapus" });
+  } catch (error) {
+    console.error("Error deleting inventaris:", error);
+    res.status(500).json({ error: "Gagal menghapus barang" });
   }
 });
 

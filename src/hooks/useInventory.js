@@ -34,10 +34,34 @@ export function useInventory() {
     }
   };
 
+  const updateItem = async (id, formData) => {
+    try {
+      await inventoryService.update(id, formData);
+      fetchInventory();
+      return true;
+    } catch (err) {
+      alert(err.message || "Gagal mengupdate barang!");
+      return false;
+    }
+  };
+
+  const deleteItem = async (id) => {
+    try {
+      await inventoryService.delete(id);
+      fetchInventory();
+      return true;
+    } catch (err) {
+      alert(err.message || "Gagal menghapus barang!");
+      return false;
+    }
+  };
+
   return {
     inventoryData,
     isLoading,
     addItem,
+    updateItem,
+    deleteItem,
     fetchInventory
   };
 }

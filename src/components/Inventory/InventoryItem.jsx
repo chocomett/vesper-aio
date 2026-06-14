@@ -1,4 +1,4 @@
-import { Package, Camera, Headphones, Zap } from 'lucide-react';
+import { Package, Camera, Headphones, Zap, Edit2, Trash2 } from 'lucide-react';
 
 const KategoriIcon = ({ kategori }) => {
   switch(kategori) {
@@ -9,7 +9,7 @@ const KategoriIcon = ({ kategori }) => {
   }
 };
 
-export default function InventoryItem({ item }) {
+export default function InventoryItem({ item, onEdit, onDelete }) {
   const tersedia = item.jumlah_total - item.jumlah_dipinjam;
   const isHabis = tersedia === 0;
 
@@ -56,10 +56,13 @@ export default function InventoryItem({ item }) {
           </div>
         </div>
         
-        {/* Action Buttons (Edit / Options) */}
-        <div className="flex items-center gap-1 w-auto sm:w-16 justify-end">
-          <button className="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors tooltip" title="Edit Barang">
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+        {/* Action Buttons (Edit / Delete) */}
+        <div className="flex items-center gap-1 w-auto sm:w-20 justify-end">
+          <button onClick={() => onEdit(item)} className="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors tooltip" title="Edit Barang">
+            <Edit2 className="w-4 h-4" />
+          </button>
+          <button onClick={() => onDelete(item.id)} className="p-2 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors tooltip" title="Hapus Barang">
+            <Trash2 className="w-4 h-4" />
           </button>
         </div>
       </div>

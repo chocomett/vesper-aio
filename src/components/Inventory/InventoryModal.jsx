@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-export default function InventoryModal({ isOpen, onClose, onAdd }) {
+export default function InventoryModal({ isOpen, onClose, onSave, initialData }) {
   const [formData, setFormData] = useState({
     kode_barang: '',
     nama_barang: '',
@@ -10,13 +10,22 @@ export default function InventoryModal({ isOpen, onClose, onAdd }) {
     lokasi_simpan: ''
   });
 
+  const isEdit = !!initialData;
+
+  useEffect(() => {
+    if (initialData) {
+      setFormData(initialData);
+    } else {
+      setFormData({ kode_barang: '', nama_barang: '', kategori: 'Kamera', kondisi: 'Baik', jumlah_total: 1, lokasi_simpan: '' });
+    }
+  }, [initialData, isOpen]);
+
   const categories = ['Kamera', 'Lensa', 'Audio', 'Kabel', 'Lighting', 'Komputer', 'Aksesoris', 'Lainnya'];
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const success = await onAdd(formData);
+    const success = await onSave(formData);
     if (success) {
-      setFormData({ kode_barang: '', nama_barang: '', kategori: 'Kamera', kondisi: 'Baik', jumlah_total: 1, lokasi_simpan: '' });
       onClose();
     }
   };
@@ -27,7 +36,7 @@ export default function InventoryModal({ isOpen, onClose, onAdd }) {
     <div className="absolute inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm">
       <div className="bg-white rounded-3xl shadow-2xl w-full max-w-md overflow-hidden flex flex-col max-h-full">
         <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50">
-          <h2 className="font-bold text-lg text-slate-800">Tambah Barang Baru</h2>
+          <h2 className="font-bold text-lg text-slate-800">{isEdit ? 'Edit Barang' : 'Tambah Barang Baru'}</h2>
           <button onClick={onClose} className="text-slate-400 hover:text-rose-500 transition-colors">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
           </button>
@@ -74,7 +83,7 @@ export default function InventoryModal({ isOpen, onClose, onAdd }) {
           </div>
 
           <button type="submit" className="w-full py-3 mt-4 bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold rounded-xl shadow-sm shadow-blue-200 transition-all">
-            Simpan Barang
+            {isEdit ? 'Simpan Perubahan' : 'Simpan Barang'}
           </button>
         </form>
       </div>

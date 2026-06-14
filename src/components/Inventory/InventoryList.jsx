@@ -1,6 +1,6 @@
 import InventoryItem from './InventoryItem';
 
-export default function InventoryList({ data, isLoading }) {
+export default function InventoryList({ data, isLoading, onEdit, onDelete }) {
   return (
     <div className="flex-1 p-4 md:p-6 bg-slate-50/50">
       <div className="max-w-7xl mx-auto bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
@@ -10,7 +10,7 @@ export default function InventoryList({ data, isLoading }) {
           <div className="flex-1">NAMA BARANG & KODE</div>
           <div className="w-48">LOKASI SIMPAN</div>
           <div className="w-32 text-right pr-6">KETERSEDIAAN</div>
-          <div className="w-16 text-center">AKSI</div>
+          <div className="w-20 text-center">AKSI</div>
         </div>
 
         <div className="divide-y divide-slate-100">
@@ -19,7 +19,7 @@ export default function InventoryList({ data, isLoading }) {
           ) : data.length === 0 ? (
             <div className="p-8 text-center text-slate-500 font-medium">Tidak ada data ditemukan.</div>
           ) : (
-            data.map(item => <InventoryItem key={item.id} item={item} />)
+            data.map(item => <InventoryItem key={item.id} item={item} onEdit={onEdit} onDelete={onDelete} />)
           )}
         </div>
       </div>

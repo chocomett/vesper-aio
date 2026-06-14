@@ -32,10 +32,6 @@ CREATE TABLE IF NOT EXISTS inventaris (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-INSERT INTO inventaris (kode_barang, nama_barang, kategori, kondisi, jumlah_total, lokasi_simpan) VALUES 
-('CAM-SNY-01', 'Kamera Sony A7III', 'Kamera', 'Baik', 2, 'Lemari Utama Komsos'),
-('LNS-SNY-01', 'Lensa Sony FE 24-70mm', 'Lensa', 'Baik', 1, 'Lemari Utama Komsos'),
-('AUD-MIC-01', 'Saramonic Blink 500', 'Audio', 'Baik', 1, 'Laci Audio');
 
 -- ==========================================
 -- MODUL PEMINJAMAN (TRACKING BARANG)

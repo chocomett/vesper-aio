@@ -1,89 +1,23 @@
 import express from "express";
 import ViteExpress from "vite-express";
-import mysql from "mysql2/promise";
 import dotenv from "dotenv";
 import fs from "fs";
+
+// Import Routes
+import inventarisRoutes from "./server/routes/inventaris.routes.js";
 
 dotenv.config();
 
 const app = express();
 app.use(express.json());
 
-const dbConfig = {
-  host: process.env.DB_HOST || "localhost",
-  port: process.env.DB_PORT || 3307,
-  user: process.env.DB_USER || "admin",
-  password: process.env.DB_PASSWORD || "admin",
-  database: process.env.DB_NAME || "vesper_rpd",
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0
-};
-console.log("DB CONFIG:", dbConfig);
-const dbPool = mysql.createPool(dbConfig);
+// =====================================
+// REGISTER ROUTES (Daftar API)
+// =====================================
+app.use('/api/inventaris', inventarisRoutes);
 
-// Endpoint API
-app.get('/api/inventaris', async (req, res) => {
-  try {
-    const [rows] = await dbPool.query('SELECT * FROM inventaris ORDER BY kategori ASC, nama_barang ASC');
-    res.json(rows);
-  } catch (error) {
-    fs.writeFileSync("db_error.log", String(error.stack || error));
-    console.error("Error fetching inventaris:", error);
-    res.status(500).json({ error: "Gagal mengambil data inventaris dari database" });
-  }
-});
-
-app.post('/api/inventaris', async (req, res) => {
-  const { kode_barang, nama_barang, kategori, kondisi, jumlah_total, lokasi_simpan, catatan } = req.body;
-  try {
-    const query = `
-      INSERT INTO inventaris (kode_barang, nama_barang, kategori, kondisi, jumlah_total, lokasi_simpan, catatan) 
-      VALUES (?, ?, ?, ?, ?, ?, ?)
-    `;
-    const [result] = await dbPool.query(query, [
-      kode_barang, nama_barang, kategori, kondisi || 'Baik', jumlah_total || 1, lokasi_simpan, catatan
-    ]);
-    res.status(201).json({ id: result.insertId, message: "Barang berhasil ditambahkan" });
-  } catch (error) {
-    console.error("Error adding inventaris:", error);
-    res.status(500).json({ error: error.message || "Gagal menyimpan barang ke database" });
-  }
-});
-
-// Endpoint untuk Update Barang (Edit)
-app.put('/api/inventaris/:id', async (req, res) => {
-  const { id } = req.params;
-  const { kode_barang, nama_barang, kategori, kondisi, jumlah_total, lokasi_simpan, catatan } = req.body;
-  try {
-    const query = `
-      UPDATE inventaris 
-      SET kode_barang=?, nama_barang=?, kategori=?, kondisi=?, jumlah_total=?, lokasi_simpan=?, catatan=?
-      WHERE id=?
-    `;
-    const [result] = await dbPool.query(query, [
-      kode_barang, nama_barang, kategori, kondisi, jumlah_total, lokasi_simpan, catatan, id
-    ]);
-    if (result.affectedRows === 0) return res.status(404).json({ error: "Barang tidak ditemukan" });
-    res.json({ message: "Barang berhasil diupdate" });
-  } catch (error) {
-    console.error("Error updating inventaris:", error);
-    res.status(500).json({ error: error.message || "Gagal mengupdate barang" });
-  }
-});
-
-// Endpoint untuk Delete Barang
-app.delete('/api/inventaris/:id', async (req, res) => {
-  const { id } = req.params;
-  try {
-    const [result] = await dbPool.query('DELETE FROM inventaris WHERE id=?', [id]);
-    if (result.affectedRows === 0) return res.status(404).json({ error: "Barang tidak ditemukan" });
-    res.json({ message: "Barang berhasil dihapus" });
-  } catch (error) {
-    console.error("Error deleting inventaris:", error);
-    res.status(500).json({ error: "Gagal menghapus barang" });
-  }
-});
+// Nanti kalau ada peminjaman, tinggal tambah:
+// app.use('/api/peminjaman', peminjamanRoutes);
 
 const PORT = process.env.PORT || 5173;
 

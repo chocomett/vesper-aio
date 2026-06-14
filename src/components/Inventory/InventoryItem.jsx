@@ -24,7 +24,7 @@ export default function InventoryItem({ item, onEdit, onDelete }) {
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2 mb-0.5">
             <h3 className="font-bold text-slate-800 text-sm truncate">{item.nama_barang}</h3>
-            <span className="hidden sm:inline-block px-1.5 py-0.5 bg-slate-100 border border-slate-200 text-slate-500 rounded text-[10px] font-bold shrink-0">{item.kode_barang}</span>
+            <span className="px-1.5 py-0.5 bg-slate-100 border border-slate-200 text-slate-500 rounded text-[10px] font-bold shrink-0">{item.kode_barang}</span>
           </div>
           <div className="text-xs text-slate-500 flex items-center gap-2">
             <span className="font-medium text-slate-600">{item.kategori}</span>

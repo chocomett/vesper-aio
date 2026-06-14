@@ -6,7 +6,8 @@ import InventoryToolbar from '../components/Inventory/InventoryToolbar';
 import InventoryList from '../components/Inventory/InventoryList';
 import InventoryModal from '../components/Inventory/InventoryModal';
 
-const CATEGORIES = ['Semua', 'Kamera', 'Lensa', 'Audio', 'Kabel', 'Lighting', 'Komputer', 'Aksesoris', 'Lainnya'];
+// Hapus hardcoded CATEGORIES
+// const CATEGORIES = ['Semua', ...];
 
 export default function InventoryPage() {
   const { inventoryData, isLoading, addItem, updateItem, deleteItem } = useInventory();
@@ -24,6 +25,12 @@ export default function InventoryPage() {
     const matchFilter = filter === 'Semua' || item.kategori === filter;
     return matchSearch && matchFilter;
   });
+
+  // Ambil semua kategori unik dari database, lalu gabung dengan default
+  const uniqueCategories = Array.from(new Set(inventoryData.map(item => item.kategori)));
+  const DEFAULT_CATEGORIES = ['Kamera', 'Lensa', 'Audio', 'Kabel', 'Lighting', 'Komputer', 'Aksesoris'];
+  const mergedCategories = Array.from(new Set([...DEFAULT_CATEGORIES, ...uniqueCategories]));
+  const dynamicCategories = ['Semua', ...mergedCategories];
 
   const handleAddClick = () => {
     setItemToEdit(null);
@@ -50,7 +57,7 @@ export default function InventoryPage() {
   };
 
   return (
-    <div className="h-full w-full bg-slate-50 text-slate-900 overflow-hidden flex flex-col rounded-3xl shadow-lg border border-slate-200 relative">
+    <div className="h-full w-full bg-slate-50 text-slate-900 overflow-hidden flex flex-col md:rounded-3xl md:shadow-lg md:border md:border-slate-200 relative">
       
       {/* Header Utama */}
       <div className="px-4 py-4 md:px-6 md:py-5 flex flex-col sm:flex-row sm:items-center justify-between bg-white border-b border-slate-200 shrink-0 shadow-sm z-10 gap-4">
@@ -81,7 +88,7 @@ export default function InventoryPage() {
           setSearch={setSearch} 
           filter={filter} 
           setFilter={setFilter} 
-          categories={CATEGORIES} 
+          categories={dynamicCategories} 
         />
         
         <InventoryList 

@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS inventaris (
     id INT AUTO_INCREMENT PRIMARY KEY,
     kode_barang VARCHAR(30) NOT NULL UNIQUE,
     nama_barang VARCHAR(100) NOT NULL,
-    kategori ENUM('Kamera', 'Lensa', 'Audio', 'Kabel', 'Lighting', 'Komputer', 'Aksesoris', 'Lainnya') NOT NULL,
+    kategori VARCHAR(50) NOT NULL,
     kondisi ENUM('Baik', 'Rusak Ringan', 'Rusak Berat', 'Hilang') DEFAULT 'Baik',
     jumlah_total INT DEFAULT 1,
     jumlah_dipinjam INT DEFAULT 0, -- Kolom sakti untuk melacak berapa unit yang sedang dipinjam

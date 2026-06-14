@@ -2,8 +2,8 @@ import InventoryItem from './InventoryItem';
 
 export default function InventoryList({ data, isLoading, onEdit, onDelete }) {
   return (
-    <div className="flex-1 p-4 md:p-6 bg-slate-50/50">
-      <div className="max-w-7xl mx-auto bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+    <div className="flex-1 md:p-6 bg-slate-50/50">
+      <div className="max-w-7xl mx-auto bg-white md:rounded-2xl md:border border-slate-200 shadow-sm overflow-hidden">
         
         {/* Table Header (Hanya di Desktop) */}
         <div className="hidden sm:flex items-center px-4 py-3 bg-slate-50 border-b border-slate-200 text-xs font-bold text-slate-500">

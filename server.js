@@ -5,6 +5,7 @@ import fs from "fs";
 
 // Import Routes
 import inventarisRoutes from "./server/routes/inventaris.routes.js";
+import kategoriRoutes from "./server/routes/kategori.routes.js";
 
 dotenv.config();
 
@@ -15,6 +16,7 @@ app.use(express.json());
 // REGISTER ROUTES (Daftar API)
 // =====================================
 app.use('/api/inventaris', inventarisRoutes);
+app.use('/api/kategori', kategoriRoutes);
 
 // Nanti kalau ada peminjaman, tinggal tambah:
 // app.use('/api/peminjaman', peminjamanRoutes);

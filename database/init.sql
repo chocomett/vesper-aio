@@ -16,6 +16,18 @@ INSERT INTO users (username, password, role) VALUES
 ('tamu_wifi', 'wifi_gratis', 'umat');
 
 -- ==========================================
+-- MODUL KATEGORI BARANG
+-- ==========================================
+CREATE TABLE IF NOT EXISTS kategori_barang (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nama VARCHAR(50) NOT NULL UNIQUE
+);
+
+INSERT INTO kategori_barang (nama) VALUES 
+('Kamera'), ('Lensa'), ('Audio'), ('Kabel'), 
+('Lighting'), ('Komputer'), ('Aksesoris'), ('Lainnya');
+
+-- ==========================================
 -- MODUL INVENTARIS (BARANG KOMSOS)
 -- ==========================================
 CREATE TABLE IF NOT EXISTS inventaris (

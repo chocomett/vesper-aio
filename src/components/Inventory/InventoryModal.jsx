@@ -10,9 +10,9 @@ const COMMON_SUGGESTIONS = {
   'Aksesoris': ['Tripod Takara', 'Tripod Beike', 'SD Card Sandisk 64GB', 'SD Card Sandisk 128GB', 'Baterai NP-F970', 'Dummy Battery', 'Card Reader'],
 };
 
-const DEFAULT_CATEGORIES = ['Kamera', 'Lensa', 'Audio', 'Kabel', 'Lighting', 'Komputer', 'Aksesoris', 'Lainnya'];
+// DEFAULT_CATEGORIES dihapus karena sekarang ambil dari database (props)
 
-export default function InventoryModal({ isOpen, onClose, onSave, initialData }) {
+export default function InventoryModal({ isOpen, onClose, onSave, initialData, availableCategories = [] }) {
   const [formData, setFormData] = useState({
     kode_barang: '',
     nama_barang: '',
@@ -85,7 +85,7 @@ export default function InventoryModal({ isOpen, onClose, onSave, initialData })
               placeholder="Pilih atau ketik kategori baru..."
             />
             <datalist id="kategori-options">
-              {DEFAULT_CATEGORIES.map(cat => <option key={cat} value={cat} />)}
+              {availableCategories.map(cat => <option key={cat} value={cat} />)}
             </datalist>
           </div>
           

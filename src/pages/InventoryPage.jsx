@@ -2,20 +2,21 @@ import { useState } from 'react';
 import { ArrowLeft, Plus } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useInventory } from '../hooks/useInventory';
+import { useCategories } from '../hooks/useCategories';
 import InventoryToolbar from '../components/Inventory/InventoryToolbar';
 import InventoryList from '../components/Inventory/InventoryList';
 import InventoryModal from '../components/Inventory/InventoryModal';
-
-// Hapus hardcoded CATEGORIES
-// const CATEGORIES = ['Semua', ...];
+import CategoryModal from '../components/Inventory/CategoryModal';
 
 export default function InventoryPage() {
   const { inventoryData, isLoading, addItem, updateItem, deleteItem } = useInventory();
+  const { categories: dbCategories, addCategory, deleteCategory } = useCategories();
   
   // UI State
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState('Semua');
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isCatModalOpen, setIsCatModalOpen] = useState(false);
   const [itemToEdit, setItemToEdit] = useState(null);
 
   // Filter Logic
@@ -26,11 +27,9 @@ export default function InventoryPage() {
     return matchSearch && matchFilter;
   });
 
-  // Ambil semua kategori unik dari database, lalu gabung dengan default
-  const uniqueCategories = Array.from(new Set(inventoryData.map(item => item.kategori)));
-  const DEFAULT_CATEGORIES = ['Kamera', 'Lensa', 'Audio', 'Kabel', 'Lighting', 'Komputer', 'Aksesoris'];
-  const mergedCategories = Array.from(new Set([...DEFAULT_CATEGORIES, ...uniqueCategories]));
-  const dynamicCategories = ['Semua', ...mergedCategories];
+  // Susun List Kategori untuk Toolbar
+  const catNames = dbCategories.map(c => c.nama);
+  const toolbarCategories = ['Semua', ...catNames];
 
   const handleAddClick = () => {
     setItemToEdit(null);
@@ -43,12 +42,12 @@ export default function InventoryPage() {
   };
 
   const handleDeleteClick = async (id) => {
-    if (window.confirm("Yakin ingin menghapus barang ini secara permanen?")) {
+    if (window.confirm('Yakin ingin menghapus barang ini?')) {
       await deleteItem(id);
     }
   };
 
-  const handleSaveModal = async (formData) => {
+  const handleSaveItem = async (formData) => {
     if (itemToEdit) {
       return await updateItem(itemToEdit.id, formData);
     } else {
@@ -88,14 +87,15 @@ export default function InventoryPage() {
           setSearch={setSearch} 
           filter={filter} 
           setFilter={setFilter} 
-          categories={dynamicCategories} 
+          categories={toolbarCategories} 
+          onManageCategories={() => setIsCatModalOpen(true)}
         />
         
         <InventoryList 
           data={filteredData} 
           isLoading={isLoading} 
-          onEdit={handleEditClick}
-          onDelete={handleDeleteClick}
+          onEdit={handleEditClick} 
+          onDelete={handleDeleteClick} 
         />
       </div>
 
@@ -103,8 +103,17 @@ export default function InventoryPage() {
       <InventoryModal 
         isOpen={isModalOpen} 
         onClose={() => setIsModalOpen(false)} 
-        onSave={handleSaveModal}
+        onSave={handleSaveItem}
         initialData={itemToEdit}
+        availableCategories={catNames}
+      />
+
+      <CategoryModal
+        isOpen={isCatModalOpen}
+        onClose={() => setIsCatModalOpen(false)}
+        categories={dbCategories}
+        onAdd={addCategory}
+        onDelete={deleteCategory}
       />
     </div>
   );
